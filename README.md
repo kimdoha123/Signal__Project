@@ -151,32 +151,7 @@
 	•	half=True: FP16 포맷 사용
 ---
 
-## ⚙️  설치 및 실행 방법
-
-#### 1. 환경 설정
-```bash
-sudo apt update
-sudo apt install python3 python3-pip
-pip install ultralytics opencv-python pyserial
-```
-
-#### 2. 모델 학습
-```bash
-python train-yolo11n-pose.py
-```
-
-#### 3. 모델 최적화
-```bash
-python quantization-fp16.py
-```
-
-#### 4. 실시간 인식
-```bash
-python pose-estimation.py
-```
----
-
-### 🚀 예시
+### 🚀 
 1.	모터 및 센서 초기화 (Arduino)
 	•	모터 및 센서 제어를 위한 GPIO 설정
 2.	YOLO 모델로 동작 인식
