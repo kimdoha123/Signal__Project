@@ -41,6 +41,18 @@
 
 ## 🌐 하드웨어
 
+<img width="902" alt="스크린샷 2025-01-02 오후 10 15 55" src="https://github.com/user-attachments/assets/7a9772ea-a172-4458-9105-152fc91b8f8f" />
+
+---
+
+<img width="905" alt="스크린샷 2025-01-02 오후 10 16 19" src="https://github.com/user-attachments/assets/2c196187-67a9-4f57-842f-0efcf83c2b1c" />
+
+---
+
+<img width="905" alt="스크린샷 2025-01-02 오후 10 16 07" src="https://github.com/user-attachments/assets/39371d94-5d26-4314-9911-837233af7a8b" />
+
+---
+
 ### 센서 
 - HC-SR04 : 초음파 센서를 이용한 거리 측정
 ### 모터제어
@@ -55,6 +67,8 @@
 
 ## 💻 개발 환경
 
+<img width="802" alt="스크린샷 2025-01-02 오후 10 17 29" src="https://github.com/user-attachments/assets/131fcf71-dbe8-4a6d-b2fb-a8f93a2a3bb7" />
+
 ### 운영체제
 - Ubuntu 22.04
 - Jetson Nano (NVIDIA)
@@ -65,6 +79,9 @@
 ---
 
 ## 🚀 모델 학습
+
+<img width="556" alt="스크린샷 2025-01-02 오후 10 18 08" src="https://github.com/user-attachments/assets/5287c0b1-b69c-4d76-850f-93dd95b85c9b" />
+
 - YOLO11 Pose 모델 학습 (train-yolo11n-pose.py)
 - FP16 양자화 및 TensorRT 엔진 변환 (quantization-fp16.py)
 
