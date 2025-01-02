@@ -1,0 +1,26 @@
+{
+    "files.associations": {
+        "delay.h": "c",
+        "gpio.h": "c",
+        "tim.h": "c",
+        "motor.h": "c",
+        "model_motorstate.h": "c",
+        "interrupt.h": "c",
+        "listener.h": "c",
+        "model_motorhcstate.h": "c",
+        "model_motoruartstate.h": "c",
+        "hc_sr04.h": "c",
+        "apmain.h": "c",
+        "service.h": "c",
+        "io.h": "c",
+        "uart0.h": "c",
+        "model_motordirectionstate.h": "c"
+    },
+    "makefile.launchConfigurations": [
+        {
+            "cwd": "/home/chmin/Signal-Project/car",
+            "binaryPath": "/home/chmin/Signal-Project/car/main.o",
+            "binaryArgs": []
+        }
+    ]
+}

@@ -1,0 +1,141 @@
+https://github.com/ultralytics/ultralytics/issues/2084
+https://stackoverflow.com/questions/76926155/assertion-failed-inputs-at0-isint32-for-range-operator-with-dynamic-inp
+
+from pathlib import Path
+from typing import Optional
+
+from ultralytics import YOLO
+
+
+def load_yolo_model_with_tensorrt(model_file_path: Path) -> Optional[YOLO]:
+    """
+    %shell> python3 -c 'import torch; print(f"PyTorch version: {torch.__version__}"); print(f"CUDA available:  {torch.cuda.is_available()}"); print(f"cuDNN version:   {torch.backends.cudnn.version()}"); print(torch.__config__.show());'
+
+    Load the YOLO model. If the TensorRT model (.engine) exists, load it directly.
+    Otherwise, load the original model, export it to TensorRT format, and load the exported model.
+
+    Args:
+        model_file_path (Path): Path to the YOLO model file (.pt).
+
+    Returns:
+        YOLO: The loaded YOLO model (either TensorRT or original).
+
+    Example usage:
+        >>> yolo_model_file_path = ProjectConfig.ai_models_dir / "yolo11n-pose.pt"
+        >>> model = load_yolo_model_with_tensorrt(yolo_model_file_path)
+        >>> print(model)
+    """
+    # Derive the TensorRT model file path from the YOLO model path
+    tensorrt_file_path = model_file_path.with_suffix(".engine")
+
+    # Check if the TensorRT model already exists
+    if tensorrt_file_path.exists():
+        print(f"Loading TensorRT model from {tensorrt_file_path}")
+        return YOLO(str(tensorrt_file_path))
+
+    # If the TensorRT model doesn't exist, load the original YOLO model
+    print(f"TensorRT model not found. Loading original model from {model_file_path}.")
+    model = YOLO(str(model_file_path))
+
+    # Export the YOLO model to TensorRT format
+    print("Exporting model to TensorRT format...")
+    model.export(
+        format="engine",  # Export as TensorRT engine
+        device="cuda",  # Use CUDA (NVIDIA GPU)
+        int8=True,  # INT8 quantization
+        workspace=512,  # Limit maximum TensorRT workspace memory to 512MB
+        batch=1,  # Set batch size to 1 (optimal for Jetson Nano due to limited memory)
+        simplify=True,
+    )
+    # Load the newly exported TensorRT model
+    print(f"Loading exported TensorRT model from {tensorrt_file_path}")
+    return YOLO(str(tensorrt_file_path))
+
+
+# Example usage:
+yolo_model_file_path = ProjectConfig.ai_models_dir / "yolo11n-pose.pt"
+model = load_yolo_model_with_tensorrt(yolo_model_file_path)
+
+
+
+
+
+
+
+TensorRT model not found. Loading original model from /workspaces/signal-masters/ml/models/yolo11n-pose.pt.
+Exporting model to TensorRT format...
+Ultralytics 8.3.18 🚀 Python-3.8.0 torch-1.11.0a0+gitbc2c6ed CUDA:0 (NVIDIA Tegra X1, 3964MiB)
+WARNING ⚠️ INT8 export requires a missing 'data' arg for calibration. Using default 'data=coco8-pose.yaml'.
+YOLO11n-pose summary (fused): 257 layers, 2,866,468 parameters, 0 gradients, 7.4 GFLOPs
+
+PyTorch: starting from '/workspaces/signal-masters/ml/models/yolo11n-pose.pt' with input shape (1, 3, 640, 640) BCHW and output shape(s) (1, 56, 8400) (6.0 MB)
+
+ONNX: starting export with onnx 1.17.0 opset 14...
+WARNING: The shape inference of prim::Constant type is missing, so it may result in wrong shape inference for the exported graph. Please consider adding it in symbolic function.
+WARNING: The shape inference of prim::Constant type is missing, so it may result in wrong shape inference for the exported graph. Please consider adding it in symbolic function.
+WARNING: The shape inference of prim::Constant type is missing, so it may result in wrong shape inference for the exported graph. Please consider adding it in symbolic function.
+WARNING: The shape inference of prim::Constant type is missing, so it may result in wrong shape inference for the exported graph. Please consider adding it in symbolic function.
+WARNING: The shape inference of prim::Constant type is missing, so it may result in wrong shape inference for the exported graph. Please consider adding it in symbolic function.
+WARNING: The shape inference of prim::Constant type is missing, so it may result in wrong shape inference for the exported graph. Please consider adding it in symbolic function.
+ONNX: slimming with onnxslim 0.1.35...
+ONNX: export success ✅ 84.8s, saved as '/workspaces/signal-masters/ml/models/yolo11n-pose.onnx' (11.1 MB)
+
+TensorRT: starting export with TensorRT 8.2.0.6...
+[10/21/2024-05:14:48] [TRT] [I] The logger passed into createInferBuilder differs from one already provided for an existing builder, runtime, or refitter. Uses of the global logger, returned by nvinfer1::getLogger(), will return the existing value.
+
+[10/21/2024-05:14:48] [TRT] [I] [MemUsageChange] Init CUDA: CPU +0, GPU +0, now: CPU 1676, GPU 3892 (MiB)
+[10/21/2024-05:14:49] [TRT] [I] ----------------------------------------------------------------
+[10/21/2024-05:14:49] [TRT] [I] Input filename:   /workspaces/signal-masters/ml/models/yolo11n-pose.onnx
+[10/21/2024-05:14:49] [TRT] [I] ONNX IR version:  0.0.10
+[10/21/2024-05:14:49] [TRT] [I] Opset version:    14
+[10/21/2024-05:14:49] [TRT] [I] Producer name:    pytorch
+[10/21/2024-05:14:49] [TRT] [I] Producer version: 1.11.0
+[10/21/2024-05:14:49] [TRT] [I] Domain:           
+[10/21/2024-05:14:49] [TRT] [I] Model version:    0
+[10/21/2024-05:14:49] [TRT] [I] Doc string:       
+[10/21/2024-05:14:49] [TRT] [I] ----------------------------------------------------------------
+[10/21/2024-05:14:50] [TRT] [E] ModelImporter.cpp:773: While parsing node number 263 [Range -> "onnx::Add_674"]:
+[10/21/2024-05:14:50] [TRT] [E] ModelImporter.cpp:774: --- Begin node ---
+[10/21/2024-05:14:50] [TRT] [E] ModelImporter.cpp:775: input: "onnx::Range_672"
+input: "onnx::Range_671"
+input: "onnx::Range_673"
+output: "onnx::Add_674"
+name: "Range_417"
+op_type: "Range"
+...
+[10/21/2024-05:14:50] [TRT] [E] ModelImporter.cpp:776: --- End node ---
+[10/21/2024-05:14:50] [TRT] [E] ModelImporter.cpp:779: ERROR: builtin_op_importers.cpp:3352 In function importRange:
+[8] Assertion failed: inputs.at(0).isInt32() && "For range operator with dynamic inputs, this version of TensorRT only supports INT32!"
+TensorRT: export failure ❌ 87.2s: failed to load ONNX file: /workspaces/signal-masters/ml/models/yolo11n-pose.onnx
+Output is truncated. View as a scrollable element or open in a text editor. Adjust cell output settings...
+---------------------------------------------------------------------------
+RuntimeError                              Traceback (most recent call last)
+File /workspaces/signal-masters/hello_junsu.py:55
+     53 # Example usage:
+     54 yolo_model_file_path = ProjectConfig.ai_models_dir / "yolo11n-pose.pt"
+---> 55 model = load_yolo_model_with_tensorrt(yolo_model_file_path)
+
+File /workspaces/signal-masters/hello_junsu.py:40
+     38 # Export the YOLO model to TensorRT format
+     39 print("Exporting model to TensorRT format...")
+---> 40 model.export(
+     41     format="engine",  # Export as TensorRT engine
+     42     device="cuda",  # Use CUDA (NVIDIA GPU)
+     43     int8=True,  # INT8 quantization
+     44     workspace=512,  # Limit maximum TensorRT workspace memory to 512MB
+     45     batch=1,  # Set batch size to 1 (optimal for Jetson Nano due to limited memory)
+     46     simplify=True,
+     47 )
+     48 # Load the newly exported TensorRT model
+     49 print(f"Loading exported TensorRT model from {tensorrt_file_path}")
+
+File /ultralytics/ultralytics/engine/model.py:734, in Model.export(self, **kwargs)
+    726 custom = {
+    727     "imgsz": self.model.args["imgsz"],
+    728     "batch": 1,
+...
+--> 723     raise RuntimeError(f"failed to load ONNX file: {f_onnx}")
+    725 # Network inputs
+    726 inputs = [network.get_input(i) for i in range(network.num_inputs)]
+
+RuntimeError: failed to load ONNX file: /workspaces/signal-masters/ml/models/yolo11n-pose.onnx

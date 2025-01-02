@@ -1,0 +1,86 @@
+// 🅰️ Action Recognition of Hand Signals for traffic control
+{
+  "name": "yolo-on-jetson-nano",
+  "build": {
+    "dockerfile": "Dockerfile"
+  },
+  // 👇 Uncomment to connect as root instead. More info: https://aka.ms/dev-containers-non-root.
+  "remoteUser": "vscode",
+  // 👇 Features to add to the Dev Container. More info: https://containers.dev/implementors/features.
+  "features": {
+    "ghcr.io/meaningful-ooo/devcontainer-features/fish:1": {},
+    "ghcr.io/devcontainers/features/github-cli:1": {}
+    // "ghcr.io/devcontainers/features/python:1": {
+    //   "version": "3.11",
+    //   "installTools": true,
+    //   "toolsToInstall": "black,pytest",
+    //   "installJupyterlab": true
+    // }
+  },
+  "containerEnv": {
+    "DISPLAY": "localhost:10.0",
+    "XAUTHORITY": "/tmp/.Xauthority"
+  },
+  "runArgs": [
+    "--runtime", "nvidia", // Ensure NVIDIA runtime is used for GPU access
+    "--gpus", "all",
+    "--network", "host",  // Use the host network stack, allowing the container to share the host's IP address and access local services.
+    "--ipc", "host",      // Share the host's inter-process communication (IPC) resources, including shared memory and semaphores, with the container.
+    // "--shm-size", "2gb", // Allocate shared memory
+    "--device", "/dev/video0", // Access to video input devices
+    "--device", "/dev/ttyACM0",
+    "--device", "/dev/ttyACM1",
+    "--device", "/dev/ttyACM2",
+    "--volume", "/tmp/.X11-unix:/tmp/.X11-unix", // X11 forwarding for GUI apps
+    "--volume", "/home/jsnano/.Xauthority:/tmp/.Xauthority:rw", // X authority
+    "--privileged", // may be required to access hardware and devices fully
+    "--name", "signal-masters"
+  ],
+  // ⚓ naming convention: https://stackoverflow.com/questions/69464001/docker-compose-container-name-use-dash-instead-of-underscore
+  // may be required to add "--privileged"?
+  // 👇 Use 'forwardPorts' to make a list of ports inside the container available locally.
+  // "forwardPorts": [],
+
+  // 👇 Use 'postCreateCommand' to run commands after the container is created.
+  "postCreateCommand": "pip3 install --upgrade pip && pip3 install -r requirements/requirements_dev.txt && pip3 install -e .",
+
+  // 👇 Configure tool-specific properties.
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "ms-python.python",
+        "njpwerner.autodocstring",
+        "ms-toolsai.jupyter",
+        "ms-python.black-formatter",
+        "PKief.material-icon-theme",
+        "ms-python.isort"
+      ],
+      "settings": {
+        "python.analysis.extraPaths": ["/ultralytics"],
+        "files.exclude": {
+          "**/*.egg-info": true
+        }
+      }
+    }
+    
+  }
+
+}
+
+
+/*
+# check jetson-nano's cuda version
+🧮 cat /usr/local/cuda/version.txt
+>> CUDA Version 10.2.300
+
+# check jetson-nano's cuda version
+🧮 dpkg -l | grep libcudnn
+>> 8.2.1.32-1+cuda
+
+
+# check jetson-nano's L4T (Linux for Tegra) version ; https://developer.nvidia.com/embedded/linux-tegra-r3275
+🧮 head -n 1 /etc/nv_tegra_release
+>> R32 (release), REVISION: 7.5,
+Jetson Linux 32.7.5 is included as part of JetPack 4.6.5
+*/
+

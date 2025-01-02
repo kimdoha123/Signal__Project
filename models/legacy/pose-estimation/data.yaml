@@ -1,0 +1,7 @@
+train: /home/chmin/workspace/Signal-Project/models/pose-estimation/dataset/train/images  # 학습 데이터 이미지 경로
+val: /home/chmin/workspace/Signal-Project/models/pose-estimation/dataset/val/images      # 검증 데이터 이미지 경로 (선택)
+
+nc: 5  # 클래스 개수 (0, 1, 2, 3, 4)
+names: ['none', 'right', 'left', 'stop', 'slow']  # 각 클래스의 이름
+
+kpt_shape: [17, 3]  # 17개의 키포인트, 각 키포인트는 (x, y, v) 형식으로 구성

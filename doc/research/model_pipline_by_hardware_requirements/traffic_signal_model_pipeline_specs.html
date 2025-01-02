@@ -1,0 +1,395 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/4.0.0/github-markdown.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release/build/styles/default.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex/dist/katex.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/markdown-it-texmath/css/texmath.min.css">
+<link rel="stylesheet" href="file:////home/wbfw109v2/.vscode/extensions/goessner.mdmath-2.7.4/themes/default/style.css">
+
+</head>
+<body class="markdown-body">
+<span id="markdown-mermaid" aria-hidden="true"
+                    data-dark-mode-theme="dark"
+                    data-light-mode-theme="default"></span>
+                <h1 dir="auto" id="traffic-signal-model-pipline-specifications">Traffic Signal Model Pipline Specifications</h1>
+<h2 dir="auto" id="yolo11-detection-model-specifications">YOLO11 Detection Model Specifications</h2>
+<h3 dir="auto" id="model-comparisons-coco-dataset">Model Comparisons (COCO Dataset)</h3>
+<table dir="auto">
+<thead dir="auto">
+<tr dir="auto">
+<th>Model</th>
+<th>Size (pixels)</th>
+<th><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>m</mi><mi>A</mi><msubsup><mi>P</mi><mrow><mn>50</mn><mo>−</mo><mn>95</mn></mrow><mrow><mi>v</mi><mi>a</mi><mi>l</mi></mrow></msubsup></mrow><annotation encoding="application/x-tex">mAP^{val}_{50-95}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.1555em;vertical-align:-0.3064em;"></span><span class="mord mathnormal">m</span><span class="mord mathnormal">A</span><span class="mord"><span class="mord mathnormal" style="margin-right:0.13889em;">P</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.8491em;"><span style="top:-2.4519em;margin-left:-0.1389em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">50</span><span class="mbin mtight">−</span><span class="mord mtight">95</span></span></span></span><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right:0.03588em;">v</span><span class="mord mathnormal mtight">a</span><span class="mord mathnormal mtight" style="margin-right:0.01968em;">l</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.3064em;"><span></span></span></span></span></span></span></span></span></span></th>
+<th>Speed (CPU ONNX, ms)</th>
+<th>Speed (T4 TensorRT10, ms)</th>
+<th>Params (M)</th>
+<th>FLOPs (B)</th>
+</tr>
+</thead>
+<tbody dir="auto">
+<tr dir="auto">
+<td>YOLO11n</td>
+<td>640</td>
+<td>39.5</td>
+<td>56.1 ± 0.8</td>
+<td>1.5 ± 0.0</td>
+<td>2.6</td>
+<td>6.5</td>
+</tr>
+<tr dir="auto">
+<td>YOLO11s</td>
+<td>640</td>
+<td>47.0</td>
+<td>90.0 ± 1.2</td>
+<td>2.5 ± 0.0</td>
+<td>9.4</td>
+<td>21.5</td>
+</tr>
+<tr dir="auto">
+<td>YOLO11m</td>
+<td>640</td>
+<td>51.5</td>
+<td>183.2 ± 2.0</td>
+<td>4.7 ± 0.1</td>
+<td>20.1</td>
+<td>68.0</td>
+</tr>
+<tr dir="auto">
+<td>YOLO11l</td>
+<td>640</td>
+<td>53.4</td>
+<td>238.6 ± 1.4</td>
+<td>6.2 ± 0.1</td>
+<td>25.3</td>
+<td>86.9</td>
+</tr>
+<tr dir="auto">
+<td>YOLO11x</td>
+<td>640</td>
+<td>54.7</td>
+<td>462.8 ± 6.7</td>
+<td>11.3 ± 0.2</td>
+<td>56.9</td>
+<td>194.9</td>
+</tr>
+</tbody>
+</table>
+<h4 dir="auto" id="yolo11-detection-notes">YOLO11 Detection Notes</h4>
+<ul dir="auto">
+<li dir="auto"><strong><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>m</mi><mi>A</mi><msup><mi>P</mi><mrow><mi>v</mi><mi>a</mi><mi>l</mi></mrow></msup></mrow><annotation encoding="application/x-tex">mAP^{val}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8491em;"></span><span class="mord mathnormal">m</span><span class="mord mathnormal">A</span><span class="mord"><span class="mord mathnormal" style="margin-right:0.13889em;">P</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8491em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right:0.03588em;">v</span><span class="mord mathnormal mtight">a</span><span class="mord mathnormal mtight" style="margin-right:0.01968em;">l</span></span></span></span></span></span></span></span></span></span></span></span> values</strong> are for single-model single-scale on the <a href="https://cocodataset.org/##home">COCO val2017 dataset</a>.</li>
+<li dir="auto"><strong>Speed</strong> values are averaged over COCO val images using an Amazon EC2 P4d instance.
+<ul dir="auto">
+<li dir="auto">CPU results are based on the ONNX runtime.</li>
+<li dir="auto">GPU results are based on TensorRT10 with an NVIDIA T4 GPU.</li>
+</ul>
+</li>
+</ul>
+<h4 dir="auto" id="example-commands">Example Commands</h4>
+<ul dir="auto">
+<li dir="auto">
+<p dir="auto">To reproduce <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>m</mi><mi>A</mi><msup><mi>P</mi><mrow><mi>v</mi><mi>a</mi><mi>l</mi></mrow></msup></mrow><annotation encoding="application/x-tex">mAP^{val}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8491em;"></span><span class="mord mathnormal">m</span><span class="mord mathnormal">A</span><span class="mord"><span class="mord mathnormal" style="margin-right:0.13889em;">P</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8491em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right:0.03588em;">v</span><span class="mord mathnormal mtight">a</span><span class="mord mathnormal mtight" style="margin-right:0.01968em;">l</span></span></span></span></span></span></span></span></span></span></span></span> results:</p>
+<pre><code class="code-line language-bash" dir="auto">yolo val detect data=coco.yaml device=0
+
+
+</code></pre>
+</li>
+</ul>
+<h2 dir="auto" id="efficientgcn-model-comparisons">EfficientGCN Model Comparisons</h2>
+<h3 dir="auto" id="overview">Overview</h3>
+<p dir="auto">The table below compares the EfficientGCN models (B0, B2, B4) with state-of-the-art methods on the X-sub benchmark in terms of accuracy (%), FLOPs (<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>×</mo><mn>1</mn><msup><mn>0</mn><mn>9</mn></msup></mrow><annotation encoding="application/x-tex">\times 10^9</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8974em;vertical-align:-0.0833em;"></span><span class="mord">×</span><span class="mord">1</span><span class="mord"><span class="mord">0</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">9</span></span></span></span></span></span></span></span></span></span></span>), and parameter count (<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>×</mo><mn>1</mn><msup><mn>0</mn><mn>6</mn></msup></mrow><annotation encoding="application/x-tex">\times 10^6</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8974em;vertical-align:-0.0833em;"></span><span class="mord">×</span><span class="mord">1</span><span class="mord"><span class="mord">0</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">6</span></span></span></span></span></span></span></span></span></span></span>). The models are directly compared with EfficientGCN-B0, B2, and B4, respectively.</p>
+<h3 dir="auto" id="efficientgcn-b0">EfficientGCN-B0</h3>
+<table dir="auto">
+<thead dir="auto">
+<tr dir="auto">
+<th>Model</th>
+<th>Accuracy (%)</th>
+<th>FLOPs (<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>×</mo><mn>1</mn><msup><mn>0</mn><mn>9</mn></msup></mrow><annotation encoding="application/x-tex">\times 10^9</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8974em;vertical-align:-0.0833em;"></span><span class="mord">×</span><span class="mord">1</span><span class="mord"><span class="mord">0</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">9</span></span></span></span></span></span></span></span></span></span></span>)</th>
+<th>Ratio</th>
+<th>## Params (<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>×</mo><mn>1</mn><msup><mn>0</mn><mn>6</mn></msup></mrow><annotation encoding="application/x-tex">\times 10^6</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8974em;vertical-align:-0.0833em;"></span><span class="mord">×</span><span class="mord">1</span><span class="mord"><span class="mord">0</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">6</span></span></span></span></span></span></span></span></span></span></span>)</th>
+<th>Ratio</th>
+</tr>
+</thead>
+<tbody dir="auto">
+<tr dir="auto">
+<td><strong>EfficientGCN-B0</strong></td>
+<td>90.2</td>
+<td>2.73</td>
+<td>1x</td>
+<td>0.29</td>
+<td>1x</td>
+</tr>
+<tr dir="auto">
+<td>ST-GCN [11]</td>
+<td>81.5</td>
+<td>16.32*</td>
+<td>5.98×</td>
+<td>3.01*</td>
+<td>10.69×</td>
+</tr>
+<tr dir="auto">
+<td>SR-TSL [42]</td>
+<td>84.8</td>
+<td>4.20*</td>
+<td>1.54×</td>
+<td>19.07</td>
+<td>65.76×</td>
+</tr>
+<tr dir="auto">
+<td>RA-GCNv1 [14]</td>
+<td>85.2</td>
+<td>32.80*</td>
+<td>12.02×</td>
+<td>6.21</td>
+<td>21.41×</td>
+</tr>
+<tr dir="auto">
+<td>RA-GCNv2 [31]</td>
+<td>87.3</td>
+<td>32.80*</td>
+<td>12.02×</td>
+<td>6.21</td>
+<td>21.41×</td>
+</tr>
+<tr dir="auto">
+<td>AS-GCN [48]</td>
+<td>86.8</td>
+<td>30.09*</td>
+<td>11.02×</td>
+<td>5.19</td>
+<td>17.91×</td>
+</tr>
+<tr dir="auto">
+<td>2s-AGCN [13]</td>
+<td>88.5</td>
+<td>37.32*</td>
+<td>13.67×</td>
+<td>6.94*</td>
+<td>23.93×</td>
+</tr>
+<tr dir="auto">
+<td>SGN [36]</td>
+<td>89.0</td>
+<td>–</td>
+<td>–</td>
+<td>0.69</td>
+<td>2.39×</td>
+</tr>
+<tr dir="auto">
+<td>AGC-LSTM [41]</td>
+<td>89.2</td>
+<td>22.98*</td>
+<td>8.42×</td>
+<td>22.98*</td>
+<td>78.93×</td>
+</tr>
+<tr dir="auto">
+<td>DGNN [16]</td>
+<td>89.9</td>
+<td>41.76*</td>
+<td>15.30×</td>
+<td>3.61</td>
+<td>12.39×</td>
+</tr>
+<tr dir="auto">
+<td>NAS-GCN [50]</td>
+<td>89.4</td>
+<td>–</td>
+<td>–</td>
+<td>2.07</td>
+<td>7.06×</td>
+</tr>
+<tr dir="auto">
+<td>PL-GCN [49]</td>
+<td>89.7</td>
+<td>–</td>
+<td>–</td>
+<td>20.77</td>
+<td>71.38×</td>
+</tr>
+</tbody>
+</table>
+<h3 dir="auto" id="efficientgcn-b2">EfficientGCN-B2</h3>
+<table dir="auto">
+<thead dir="auto">
+<tr dir="auto">
+<th>Model</th>
+<th>Accuracy (%)</th>
+<th>FLOPs (<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>×</mo><mn>1</mn><msup><mn>0</mn><mn>9</mn></msup></mrow><annotation encoding="application/x-tex">\times 10^9</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8974em;vertical-align:-0.0833em;"></span><span class="mord">×</span><span class="mord">1</span><span class="mord"><span class="mord">0</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">9</span></span></span></span></span></span></span></span></span></span></span>)</th>
+<th>Ratio</th>
+<th>## Params (<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>×</mo><mn>1</mn><msup><mn>0</mn><mn>6</mn></msup></mrow><annotation encoding="application/x-tex">\times 10^6</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8974em;vertical-align:-0.0833em;"></span><span class="mord">×</span><span class="mord">1</span><span class="mord"><span class="mord">0</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">6</span></span></span></span></span></span></span></span></span></span></span>)</th>
+<th>Ratio</th>
+</tr>
+</thead>
+<tbody dir="auto">
+<tr dir="auto">
+<td><strong>EfficientGCN-B2</strong></td>
+<td>91.4</td>
+<td>4.05</td>
+<td>1x</td>
+<td>0.75</td>
+<td>1x</td>
+</tr>
+<tr dir="auto">
+<td>4s-Shift-GCN [51]</td>
+<td>90.7</td>
+<td>10.06*</td>
+<td>2.47×</td>
+<td>4.76*</td>
+<td>5.41×</td>
+</tr>
+<tr dir="auto">
+<td>DC-GCN+ADG [32]</td>
+<td>91.0</td>
+<td>25.77*</td>
+<td>6.35×</td>
+<td>4.96*</td>
+<td>5.63×</td>
+</tr>
+<tr dir="auto">
+<td>PA-ResGCN-B19 [27]</td>
+<td>91.3</td>
+<td>18.52*</td>
+<td>4.57×</td>
+<td>6.47*</td>
+<td>7.14×</td>
+</tr>
+</tbody>
+</table>
+<h3 dir="auto" id="efficientgcn-b4">EfficientGCN-B4</h3>
+<table dir="auto">
+<thead dir="auto">
+<tr dir="auto">
+<th>Model</th>
+<th>Accuracy (%)</th>
+<th>FLOPs (<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>×</mo><mn>1</mn><msup><mn>0</mn><mn>9</mn></msup></mrow><annotation encoding="application/x-tex">\times 10^9</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8974em;vertical-align:-0.0833em;"></span><span class="mord">×</span><span class="mord">1</span><span class="mord"><span class="mord">0</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">9</span></span></span></span></span></span></span></span></span></span></span>)</th>
+<th>Ratio</th>
+<th>## Params (<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>×</mo><mn>1</mn><msup><mn>0</mn><mn>6</mn></msup></mrow><annotation encoding="application/x-tex">\times 10^6</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8974em;vertical-align:-0.0833em;"></span><span class="mord">×</span><span class="mord">1</span><span class="mord"><span class="mord">0</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">6</span></span></span></span></span></span></span></span></span></span></span>)</th>
+<th>Ratio</th>
+</tr>
+</thead>
+<tbody dir="auto">
+<tr dir="auto">
+<td><strong>EfficientGCN-B4</strong></td>
+<td>92.1</td>
+<td>8.36</td>
+<td>1x</td>
+<td>1.43</td>
+<td>1x</td>
+</tr>
+<tr dir="auto">
+<td>MS-G3D [18]</td>
+<td>92.1</td>
+<td>48.88*</td>
+<td>5.85×</td>
+<td>14.0</td>
+<td>5.82×</td>
+</tr>
+<tr dir="auto">
+<td>Dynamic-GCN [34]</td>
+<td>91.5</td>
+<td>–</td>
+<td>–</td>
+<td>10.2</td>
+<td>4.24×</td>
+</tr>
+<tr dir="auto">
+<td>MST-GCN [19]</td>
+<td>91.5</td>
+<td>–</td>
+<td>–</td>
+<td>12.0</td>
+<td>10.91×</td>
+</tr>
+</tbody>
+</table>
+<p dir="auto">| <strong>EfficientGCN-B2</strong>| 91.4         | 4.05                 | 1x      | 0.75                     | 1x      |
+| <strong>EfficientGCN-B0</strong> | 90.2         | 2.73                 | 1x      | 0.29                     | 1x      |
+| <strong>EfficientGCN-B4</strong>| 92.1         | 8.36                 | 1x      | 1.43                     | 1x      |</p>
+<table dir="auto">
+<thead dir="auto">
+<tr dir="auto">
+<th>Model</th>
+<th>Size (pixels)</th>
+<th><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>m</mi><mi>A</mi><msubsup><mi>P</mi><mrow><mn>50</mn><mo>−</mo><mn>95</mn></mrow><mrow><mi>v</mi><mi>a</mi><mi>l</mi></mrow></msubsup></mrow><annotation encoding="application/x-tex">mAP^{val}_{50-95}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.1555em;vertical-align:-0.3064em;"></span><span class="mord mathnormal">m</span><span class="mord mathnormal">A</span><span class="mord"><span class="mord mathnormal" style="margin-right:0.13889em;">P</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.8491em;"><span style="top:-2.4519em;margin-left:-0.1389em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">50</span><span class="mbin mtight">−</span><span class="mord mtight">95</span></span></span></span><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right:0.03588em;">v</span><span class="mord mathnormal mtight">a</span><span class="mord mathnormal mtight" style="margin-right:0.01968em;">l</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.3064em;"><span></span></span></span></span></span></span></span></span></span></th>
+<th>Speed (CPU ONNX, ms)</th>
+<th>Speed (T4 TensorRT10, ms)</th>
+<th>Params (M)</th>
+<th>FLOPs (B)</th>
+</tr>
+</thead>
+<tbody dir="auto">
+<tr dir="auto">
+<td>YOLO11n</td>
+<td>640</td>
+<td>39.5</td>
+<td>56.1 ± 0.8</td>
+<td>1.5 ± 0.0</td>
+<td>2.6</td>
+<td>6.5</td>
+</tr>
+<tr dir="auto">
+<td>YOLO11s</td>
+<td>640</td>
+<td>47.0</td>
+<td>90.0 ± 1.2</td>
+<td>2.5 ± 0.0</td>
+<td>9.4</td>
+<td>21.5</td>
+</tr>
+<tr dir="auto">
+<td>YOLO11m</td>
+<td>640</td>
+<td>51.5</td>
+<td>183.2 ± 2.0</td>
+<td>4.7 ± 0.1</td>
+<td>20.1</td>
+<td>68.0</td>
+</tr>
+<tr dir="auto">
+<td>YOLO11l</td>
+<td>640</td>
+<td>53.4</td>
+<td>238.6 ± 1.4</td>
+<td>6.2 ± 0.1</td>
+<td>25.3</td>
+<td>86.9</td>
+</tr>
+<tr dir="auto">
+<td>YOLO11x</td>
+<td>640</td>
+<td>54.7</td>
+<td>462.8 ± 6.7</td>
+<td>11.3 ± 0.2</td>
+<td>56.9</td>
+<td>194.9</td>
+</tr>
+</tbody>
+</table>
+<h2 dir="auto" id="assume-that-mediapipe-pose--hand-landmark-requires-1-gflops">Assume that (Mediapipe pose + hand landmark) requires 1 GFLOPS</h2>
+<h2 dir="auto" id="flops-calculation-for-turtlebot-3-lidar-module-hls-lfcd-lds-intel-realsense-d435-and-can-communication">FLOPS Calculation for TurtleBot 3 LiDAR Module (HLS-LFCD-LDS), Intel RealSense D435, and CAN Communication</h2>
+<h3 dir="auto" id="components-overview">Components Overview</h3>
+<ul dir="auto">
+<li dir="auto"><strong>HLS-LFCD-LDS (2D LiDAR)</strong>: This is the default LiDAR module used in <strong>TurtleBot 3</strong>. It is a 2D LiDAR sensor that provides 360-degree scanning capabilities for obstacle detection and environment mapping.</li>
+<li dir="auto"><strong>Intel RealSense D435</strong>: A depth camera providing depth maps for object detection and environment modeling.</li>
+<li dir="auto"><strong>CAN Communication and Vehicle Control Algorithms</strong>: This includes basic vehicle control such as speed and direction control using CAN communication, as well as basic path planning and obstacle avoidance.</li>
+</ul>
+<h3 dir="auto" id="flops-requirements-for-each-component-1-fps-basis">FLOPS Requirements for Each Component (1 FPS Basis)</h3>
+<ol dir="auto">
+<li dir="auto"><strong>HLS-LFCD-LDS (2D LiDAR)</strong>: 1-3 GFLOPS</li>
+<li dir="auto"><strong>Intel RealSense D435 (Depth Map Generation Only)</strong>: 1-5 GFLOPS</li>
+<li dir="auto"><strong>CAN Communication and Vehicle Control Algorithms</strong>: 4-8 GFLOPS</li>
+</ol>
+<h4 dir="auto" id="total-flops-calculation">Total FLOPS Calculation</h4>
+<p dir="auto">The total maximum FLOPS needed when all components are operating simultaneously is:</p>
+<ul dir="auto">
+<li dir="auto">
+<p dir="auto"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mtext>Total FLOPS</mtext><mo>=</mo><mo stretchy="false">(</mo><mtext>LiDAR</mtext><mo stretchy="false">)</mo><mo>+</mo><mo stretchy="false">(</mo><mtext>D435</mtext><mo stretchy="false">)</mo><mo>+</mo><mo stretchy="false">(</mo><mtext>CAN Communication and Vehicle Control</mtext><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">\text{Total FLOPS} = (\text{LiDAR}) + (\text{D435}) + (\text{CAN Communication and Vehicle Control})</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6944em;"></span><span class="mord text"><span class="mord">Total FLOPS</span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord text"><span class="mord">LiDAR</span></span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord text"><span class="mord">D435</span></span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord text"><span class="mord">CAN Communication and Vehicle Control</span></span><span class="mclose">)</span></span></span></span></p>
+<p dir="auto"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>=</mo><mn>3</mn><mtext> GFLOPS</mtext><mo>+</mo><mn>5</mn><mtext> GFLOPS</mtext><mo>+</mo><mn>8</mn><mtext> GFLOPS</mtext></mrow><annotation encoding="application/x-tex">= 3 \text{ GFLOPS} + 5 \text{ GFLOPS} + 8 \text{ GFLOPS}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.3669em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.7667em;vertical-align:-0.0833em;"></span><span class="mord">3</span><span class="mord text"><span class="mord"> GFLOPS</span></span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.7667em;vertical-align:-0.0833em;"></span><span class="mord">5</span><span class="mord text"><span class="mord"> GFLOPS</span></span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord">8</span><span class="mord text"><span class="mord"> GFLOPS</span></span></span></span></span></p>
+<p dir="auto"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>=</mo><mn>16</mn><mtext> GFLOPS</mtext></mrow><annotation encoding="application/x-tex">= 16 \text{ GFLOPS}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.3669em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord">16</span><span class="mord text"><span class="mord"> GFLOPS</span></span></span></span></span></p>
+</li>
+</ul>
+
+</body>
+</html>

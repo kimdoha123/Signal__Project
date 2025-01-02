@@ -1,0 +1,22 @@
+# https://setuptools.pypa.io/en/latest/userguide/pyproject_config.html#setuptools-specific-configuration
+[project]
+name = "signal-masters"
+version = "0.1.0"
+description = "Package for Traffic Hand Signal Action Recognition"
+authors = [{name = "wbfw109v2", email = "wbfw109v2@gmail.com"}]
+keywords = ["hand-signal", "action-recognition", "python"]
+urls = { homepage = "https://github.com/opmaksim/Signal-Project" }
+
+[tool.setuptools.packages.find]
+where = ["src"]                     # list of folders that contain the packages (["."] by default)
+include = ["signal_masters*"]       # package names should match these glob patterns (["*"] by default)
+# exclude = ["my_package.tests*"]   # exclude packages matching these glob patterns (empty by default)
+# namespaces = false                # to disable scanning PEP 420 namespaces (true by default)
+
+[build-system]
+requires = ["setuptools", "wheel"]
+build-backend = "setuptools.build_meta"
+
+
+### 💡 Pytorch version corresponding cuda ; https://pytorch.org/get-started/previous-versions/
+# pip3 install --upgrade pip3 && pip3 install -r requirements/requirements_dev.txt && pip3 install -e .
